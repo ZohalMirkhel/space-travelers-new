@@ -7,6 +7,9 @@ const ProfileList = () => {
   const rockets = useSelector(state => state.rockets);
   const reservedRockets = useSelector(state => state.reservedRockets);
 
+
+  
+
   useEffect(() => {
     dispatch(fetchRockets());
     const reservedFromLocalStorage = JSON.parse(localStorage.getItem('reservedRockets')) || [];
