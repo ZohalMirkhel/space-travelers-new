@@ -2,11 +2,10 @@ import { FETCH_MISSIONS, JOIN_MISSION, LEAVE_MISSION, LOAD_JOINED_MISSIONS } fro
 
 const initialState = {
   missions: [],
-  joinedMissions: [],
-  missionData: [],
+  joinedMissions: JSON.parse(localStorage.getItem('joinedMissions')) || [],
 };
 
-const missionReducer = (state = initialState, action) => {
+const missionsReducer = (state = initialState, action) => {
   switch (action.type) {
     case FETCH_MISSIONS:
       return {
@@ -21,9 +20,7 @@ const missionReducer = (state = initialState, action) => {
     case LEAVE_MISSION:
       return {
         ...state,
-        joinedMissions: state.joinedMissions.filter(
-          (missionId) => missionId !== action.payload
-        ),
+        joinedMissions: state.joinedMissions.filter(id => id !== action.payload),
       };
     case LOAD_JOINED_MISSIONS:
       return {
@@ -35,4 +32,4 @@ const missionReducer = (state = initialState, action) => {
   }
 };
 
-export default missionReducer;
+export default missionsReducer;
