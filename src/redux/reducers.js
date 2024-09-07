@@ -20,7 +20,7 @@ const missionsReducer = (state = initialState, action) => {
     case LEAVE_MISSION:
       return {
         ...state,
-        joinedMissions: state.joinedMissions.filter(id => id !== action.payload),
+        joinedMissions: state.joinedMissions.filter(mission => mission.mission_id !== action.payload),
       };
     case LOAD_JOINED_MISSIONS:
       return {

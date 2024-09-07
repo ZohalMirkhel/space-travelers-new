@@ -14,12 +14,14 @@ export const fetchMissions = () => async (dispatch) => {
 };
 
 export const joinMission = (missionId) => (dispatch, getState) => {
+  const { missions } = getState();
+  const mission = missions.missions.find((mission) => mission.mission_id === missionId);
+
   dispatch({
     type: JOIN_MISSION,
-    payload: missionId,
+    payload: mission,
   });
   
-  const { missions } = getState();
   localStorage.setItem('joinedMissions', JSON.stringify(missions.joinedMissions));
 };
 
@@ -32,6 +34,7 @@ export const leaveMission = (missionId) => (dispatch, getState) => {
   const { missions } = getState();
   localStorage.setItem('joinedMissions', JSON.stringify(missions.joinedMissions));
 };
+
 
 export const loadJoinedMissions = () => (dispatch) => {
     const joinedMissions = JSON.parse(localStorage.getItem('joinedMissions')) || [];

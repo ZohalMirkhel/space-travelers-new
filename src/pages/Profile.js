@@ -13,7 +13,7 @@ const Profile = () => {
 
   return (
     <div className="profile-page">
-      <h2 className="text-2xl font-bold mb-4">Joined Missions</h2>
+      <h2 className="text-2xl font-bold mb-4">Profile</h2>
       {joinedMissions.length > 0 ? (
         <ProfileList missions={joinedMissions} />
       ) : (

@@ -6,7 +6,8 @@ import PropTypes from 'prop-types';
 const MissionItem = ({ mission, isEven }) => {
   const dispatch = useDispatch();
   const joinedMissions = useSelector((state) => state.missions.joinedMissions);
-  const isJoined = joinedMissions.includes(mission.mission_id);
+
+  const isJoined = joinedMissions.some((joinedMission) => joinedMission.mission_id === mission.mission_id);
 
   const handleJoinLeave = () => {
     if (isJoined) {
