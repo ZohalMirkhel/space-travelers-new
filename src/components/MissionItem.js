@@ -3,6 +3,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import { joinMission, leaveMission } from '../redux/actions';
 import PropTypes from 'prop-types';
 
+const JoinLeaveButton = ({ isJoined, onClick }) => {
+  const buttonClass = isJoined
+    ? 'bg-white text-red-500 border border-red-500 px-3 py-1 rounded text-sm'
+    : 'bg-gray-200 text-black px-3 py-1 rounded text-sm';
+
+  return (
+    <button className={buttonClass} onClick={onClick}>
+      {isJoined ? 'Leave Mission' : 'Join Mission'}
+    </button>
+  );
+};
+
 const MissionItem = ({ mission, isEven }) => {
   const dispatch = useDispatch();
   const joinedMissions = useSelector((state) => state.missions.joinedMissions);
@@ -18,9 +30,6 @@ const MissionItem = ({ mission, isEven }) => {
   };
 
   const rowClass = isEven ? 'bg-gray-100' : 'bg-white';
-  const buttonClass = isJoined
-    ? 'bg-white text-red-500 border border-red-500 px-3 py-1 rounded text-sm'
-    : 'bg-gray-200 text-black px-3 py-1 rounded text-sm';
   const spanClass = 'px-3 py-1 rounded text-sm text-center';
 
   return (
@@ -41,12 +50,7 @@ const MissionItem = ({ mission, isEven }) => {
         </td>
         <td className="px-6 py-2 border sm:w-1/6 w-full">
           <div className="flex justify-start">
-            <button
-              className={buttonClass}
-              onClick={handleJoinLeave}
-            >
-              {isJoined ? 'Leave Mission' : 'Join Mission'}
-            </button>
+            <JoinLeaveButton isJoined={isJoined} onClick={handleJoinLeave} />
           </div>
         </td>
       </tr>
@@ -59,12 +63,7 @@ const MissionItem = ({ mission, isEven }) => {
             <span className={`${spanClass} ${isJoined ? 'bg-[#5F9EA0] text-white' : 'bg-gray-500 text-white'}`}>
               {isJoined ? 'Active Member' : 'NOT A MEMBER'}
             </span>
-            <button
-              className={buttonClass}
-              onClick={handleJoinLeave}
-            >
-              {isJoined ? 'Leave Mission' : 'Join Mission'}
-            </button>
+            <JoinLeaveButton isJoined={isJoined} onClick={handleJoinLeave} />
           </div>
         </div>
       </div>

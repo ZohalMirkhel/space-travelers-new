@@ -17,12 +17,15 @@ export const joinMission = (missionId) => (dispatch, getState) => {
   const { missions } = getState();
   const mission = missions.missions.find((mission) => mission.mission_id === missionId);
 
-  dispatch({
-    type: JOIN_MISSION,
-    payload: mission,
-  });
-  
-  localStorage.setItem('joinedMissions', JSON.stringify(missions.joinedMissions));
+  if (!missions.joinedMissions.some((joined) => joined.mission_id === missionId)) {
+    dispatch({
+      type: JOIN_MISSION,
+      payload: mission,
+    });
+
+    const updatedJoinedMissions = [...missions.joinedMissions, mission];
+    localStorage.setItem('joinedMissions', JSON.stringify(updatedJoinedMissions));
+  }
 };
 
 export const leaveMission = (missionId) => (dispatch, getState) => {
@@ -30,16 +33,18 @@ export const leaveMission = (missionId) => (dispatch, getState) => {
     type: LEAVE_MISSION,
     payload: missionId,
   });
-  
+
   const { missions } = getState();
-  localStorage.setItem('joinedMissions', JSON.stringify(missions.joinedMissions));
+  const updatedJoinedMissions = missions.joinedMissions.filter(
+    (mission) => mission.mission_id !== missionId
+  );
+  localStorage.setItem('joinedMissions', JSON.stringify(updatedJoinedMissions));
 };
 
-
 export const loadJoinedMissions = () => (dispatch) => {
-    const joinedMissions = JSON.parse(localStorage.getItem('joinedMissions')) || [];
-    dispatch({
-      type: LOAD_JOINED_MISSIONS,
-      payload: joinedMissions,
-    });
-  };
+  const joinedMissions = JSON.parse(localStorage.getItem('joinedMissions')) || [];
+  dispatch({
+    type: LOAD_JOINED_MISSIONS,
+    payload: joinedMissions,
+  });
+};
